@@ -1,0 +1,11 @@
+net: "test/resnet_101.prototxt"
+solver_mode: GPU
+
+# train
+display: 10
+max_iter: 100
+
+base_lr: 0.01
+lr_policy: "fixed"
+iter_size: 2
+
