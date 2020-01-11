@@ -20,7 +20,7 @@ Clone our project to your workspace:
 Note that we only push our modified codes here. To get the full Caffe source code, please goto [home page of Caffe](https://github.com/BVLC/caffe). After getting full source code, please copy our *dataset* directory and *test* directory to the path of Caffe, and copy files under *include/caffe* to the same directory in source code, and update the *src/caffe/util/math_functions.cu* to our *src/caffe/util/math_functions.cu*.
 
 ### Data Preparation
-Here we provide the dataset we used in our project to test the performance. However, you can set your own dataset using scripts of dataset in Caffe, and don't forget to converse the dataset into *lmdb* format and calculating the mean and std. We only use our dataset as an example here.
+Here we provide the dataset we used in our project to test the performance. However, you can set your own dataset using scripts of dataset in Caffe, and don't forget to converse the dataset into *lmdb* format and calculating the mean and std (Caffe has provided calculation scripts). We only use our dataset as an example here.
 
 ### Compile Caffe
 After configuration of codes and dataset, you can compile the caffe source code using Makefile in Caffe. Please read [compiling instructions](http://caffe.berkeleyvision.org/installation.html#compilation) in detail and make sure your compilation is successful.
@@ -47,6 +47,7 @@ In summary, we use the following optimization strategy
 - Kernel Fusion
 - Cache Friendly
 - Optimizing case by case
+
 For different tasks, different strategies are used, and different strategies are fit. Of all the strategies listed above, the last strategy is the most important -- optimizing case by case. When we used **gdb** to watch the matrix multiplication parameters, we found there're many multiplication sizes like 'M * 1' mutiplies '1 * N', so we also optimized such scenarios. According to different M and N, we may use different tiling width, block size and grid size.
 
 ## Final results
@@ -55,8 +56,7 @@ For different tasks, different strategies are used, and different strategies are
     batch_size = 2
     max_iter = 100
 ```
- |ResNet101|InceptionBN
+ Pace|ResNet101|InceptionBN
  --|:--|:--:
  Original Caffe|10.5iters/s|15.0iters/s
  Our Modified Caffe|5.0iters/s|8.4iters/s
- 
