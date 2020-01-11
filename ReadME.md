@@ -14,9 +14,9 @@ Now our code for final project **Optimizing Caffe** has been pushed. There's one
 ## Quick start
 ### Installation
 Clone our project to your workspace:
-'''
+```
     git clone https://github.com/Simon-Fuhaoyuan/Distibuted-Parallel-Computing.git
-'''
+```
 Note that we only push our modified codes here. To get the full Caffe source code, please goto [home page of Caffe](https://github.com/BVLC/caffe). After getting full source code, please copy our *dataset* directory and *test* directory to the path of Caffe, and copy files under *include/caffe* to the same directory in source code, and update the *src/caffe/util/math_functions.cu* to our *src/caffe/util/math_functions.cu*.
 
 ### Data Preparation
@@ -29,10 +29,10 @@ After configuration of codes and dataset, you can compile the caffe source code 
 - **Note**: Our training process uses our small dataset including only 4 pictures about cats and dogs, respectively.
 
 To train ResNet101, please use command:
-'''
+```
     sh test/train_resnet_101.sh
-'''
+```
 To train InceptionBN, please use command:
-'''
+```
     sh test/inception21k_train.sh
-'''
+```
