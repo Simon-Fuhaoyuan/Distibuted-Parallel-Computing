@@ -1,7 +1,7 @@
 # CS433 Distributed and Parallel Computing Course
 This repo includes some codes about 
-- OpenMP \
-- CUDA \
+- OpenMP
+- CUDA
 - Our final project -- **Optimizing Caffe**
 
 The first two homework are quite naive, but they gave us a basic feeling of parallel programming, especially using CUDA to write kernel functions. The ability of writing high-performanced CUDA kernel functions, as our teacher said, decides whether you can get a satisfying offer!
@@ -25,7 +25,7 @@ Here we provide the dataset we used in our project to test the performance. Howe
 ### Compile Caffe
 After configuration of codes and dataset, you can compile the caffe source code using Makefile in Caffe. Please read [compiling instructions](http://caffe.berkeleyvision.org/installation.html#compilation) in detail and make sure your compilation is successful.
 
-### Train
+### Training
 - **Note**: Our training process uses our small dataset including only 4 pictures about cats and dogs, respectively.
 
 To train ResNet101, please use command:
@@ -36,3 +36,27 @@ To train InceptionBN, please use command:
 ```
     sh test/inception21k_train.sh
 ```
+
+## Introduction about our optimization strategy
+In summary, we use the following optimization strategy
+- Data Tiling
+- Shared Memory
+- Loop Unrolling
+- Stream Parallel
+- Constant Memory
+- Kernel Fusion
+- Cache Friendly
+- Optimizing case by case
+For different tasks, different strategies are used, and different strategies are fit. Of all the strategies listed above, the last strategy is the most important -- optimizing case by case. When we used **gdb** to watch the matrix multiplication parameters, we found there're many multiplication sizes like 'M * 1' mutiplies '1 * N', so we also optimized such scenarios. According to different M and N, we may use different tiling width, block size and grid size.
+
+## Final results
+- **Note**: our results are tested under the situation of
+```
+    batch_size = 2
+    max_iter = 100
+```
+ |ResNet101|InceptionBN
+ --|:--|:--:
+ Original Caffe|10.5iters/s|15.0iters/s
+ Our Modified Caffe|5.0iters/s|8.4iters/s
+ 
